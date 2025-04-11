@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Images By Olofsson – SharePoint Custom</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 3s ease-in-out;
+      z-index: -1;
+      opacity: 0;
+    }
+
+    .background.active {
+      opacity: 1;
+    }
+
+    .ibo-center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      margin-top: 10vh;
+      gap: 0;
+      position: relative;
+    }
+
+    .ibo-card {
+      width: 280px;
+      height: 280px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .ibo-card:nth-child(1) { left: -300px; z-index: 3; }
+    .ibo-card:nth-child(2) { left: 0; z-index: 2; }
+    .ibo-card:nth-child(3) { left: 300px; z-index: 1; }
+
+    .ibo-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    .ibo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ibo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.8));
+      z-index: 1;
+    }
+
+    .ibo-card-text {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 22px;
+      z-index: 2;
+    }
+
+    .ibo-card-copyright {
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      color: white;
+      font-size: 10px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Layers -->
+  <div id="bg1" class="background"></div>
+  <div id="bg2" class="background"></div>
+
+  <!-- Center Image Cards -->
+  <div class="ibo-center-container">
+    <a class="ibo-card" href="Gallery.aspx">
+      <img id="img1" src="" alt="Images">
+      <div class="ibo-overlay"></div>
+      <div class="ibo-card-text">Images</div>
+      <div class="ibo-card-copyright">© ImagesByOlofsson</div>
+    </a>
+    <a class="ibo-card" href="About.aspx">
+      <img id="img2" src="" alt="By">
+      <div class="ibo-overlay"></div>
+      <div class="ibo-card-text">By</div>
+      <div class="ibo-card-copyright">© ImagesByOlofsson</div>
+    </a>
+    <a class="ibo-card" href="Contact.aspx">
+      <img id="img3" src="" alt="Olofsson">
+      <div class="ibo-overlay"></div>
+      <div class="ibo-card-text">Olofsson</div>
+      <div class="ibo-card-copyright">© ImagesByOlofsson</div>
+    </a>
+  </div>
+
+  <script>
+    const bgImages = [
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54428625562_a92b126432_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54429633829_97e931cea7_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54429667484_b96ef285ab_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54429684008_880c082ef4_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54429854905_8381ea3e88_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54429858700_8b70e0c92b_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/54430340963_c28a765a3d_k.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/bg-compressed/frost.jpg"
+    ];
+
+    const cardImages = [
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54428578737_021909f29d_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54429286157_70d9ebfdee_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54429491396_9b489ee24e_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54429633604_b78450f987_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54429663139_e95e58d3b1_c%20(1).jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54429684303_9079595c49_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54430103961_98264056d4_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54430302319_427f5ca47e_c.jpg",
+      "https://raw.githubusercontent.com/LinusOlofsson-maker/IBO/main/Center-compressed/54430304244_3b4031f828_c.jpg"
+    ];
+
+    const bg1 = document.getElementById('bg1');
+    const bg2 = document.getElementById('bg2');
+    let bgIndex = 0;
+    let showingBg1 = true;
+
+    function rotateBackground() {
+      const next = (bgIndex + 1) % bgImages.length;
+      const currentEl = showingBg1 ? bg1 : bg2;
+      const nextEl = showingBg1 ? bg2 : bg1;
+      nextEl.style.backgroundImage = `url('${bgImages[next]}')`;
+      nextEl.classList.add('active');
+      currentEl.classList.remove('active');
+      showingBg1 = !showingBg1;
+      bgIndex = next;
+    }
+
+    function rotateCards() {
+      const used = new Set();
+      [1, 2, 3].forEach(i => {
+        let rand;
+        do {
+          rand = Math.floor(Math.random() * cardImages.length);
+        } while (used.has(rand));
+        used.add(rand);
+        document.getElementById(`img${i}`).src = cardImages[rand];
+      });
+    }
+
+    setInterval(rotateBackground, 18000); // 18s background fade
+    setInterval(rotateCards, 14000); // 14s card swap
+
+    window.onload = () => {
+      bg1.style.backgroundImage = `url('${bgImages[0]}')`;
+      bg1.classList.add('active');
+      rotateCards();
+    };
+  </script>
+</body>
+</html>
